@@ -1,0 +1,20 @@
+.app {
+  display: flex;
+  font-family: Arial, sans-serif;
+  height: 100vh;
+}
+
+.content {
+  padding: 20px;
+  flex-grow: 1;
+  background-color: #f1f3f5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50vw;
+  color: blue;
+}
+
+.info{
+  width: 30vw;
+}

@@ -1,0 +1,29 @@
+.lateral-menu {
+    display: flex;
+    flex-direction: column;
+    width: 16vw;
+    background-color: lightblue;
+    border-right: 1px solid #dee2e6;
+    padding: 10px;
+  }
+  
+  .menu-button {
+    background-color: #ffffff;
+    border: 1px solid #ced4da;
+    color: #495057;
+    padding: 10px;
+    margin-bottom: 5px;
+    cursor: pointer;
+    text-align: left;
+    transition: background-color 0.3s, color 0.3s;
+  }
+  
+  .menu-button:hover {
+    background-color: #e2e6ea;
+    color: #212529;
+  }
+  
+  .menu-button:active {
+    background-color: #dae0e5;
+    color: #212529;
+  }
