@@ -10,11 +10,12 @@
   background-color: #f1f3f5;
   display: flex;
   justify-content: center;
+  flex-direction: column;
   align-items: center;
   width: 50vw;
   color: blue;
 }
 
-.info{
+.info {
   width: 30vw;
 }
