@@ -1,35 +1,29 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React, { useState } from 'react';
+import './App.css';
+import LateralMenu from './LateralMenu';
+import GrowingBall from './GrowingBall';
 
-function App() {
-  const [count, setCount] = useState(0)
+const App = () => {
+  const [selectedItem, setSelectedItem] = useState('Ataque de Panico');
+
+  const handleSelect = (item) => {
+    setSelectedItem(item);
+  };
+
+  const menuItems = ['Estres','Ataque de Panico','Ansiedad','Meditacion'];
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div className="app">
+      <LateralMenu items={menuItems} onSelect={handleSelect} />
+      <div className="content">
+        <h1>{selectedItem}</h1>
+        <div className="ball"></div> 
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
+      <div className="info">
+        <h1>Info adicional</h1>
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+    </div>
+  );
+};
 
-export default App
+export default App;
