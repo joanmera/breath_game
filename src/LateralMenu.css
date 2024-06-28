@@ -1,25 +1,37 @@
+:root{
+  --color-a: #034159;
+  --color-b: #025951;
+  --color-c: #02735E;
+  --color-d: #038C3E;
+  --color-e: #0CF25D;
+}
+
 .lateral-menu {
     display: flex;
     flex-direction: column;
-    width: 16vw;
-    background-color: lightblue;
-    border-right: 1px solid #dee2e6;
+    width: 12vw;
+    background: linear-gradient(45deg, #02735E 0%, #038C3E 100%);
     padding: 10px;
+    margin-left: 5vw;
+    height: 78vh;
+    border-radius: 1vw;
   }
   
   .menu-button {
-    background-color: #ffffff;
-    border: 1px solid #ced4da;
-    color: #495057;
+    background-color: var(--color-b);
+    color: white;
     padding: 10px;
     margin-bottom: 5px;
     cursor: pointer;
     text-align: left;
     transition: background-color 0.3s, color 0.3s;
+    font-size: 2.5vh;
+    font-weight: 600;
+    margin: 2vh;
   }
   
   .menu-button:hover {
-    background-color: #e2e6ea;
+    background-color: var(--color-e);
     color: #212529;
   }
   

@@ -9,7 +9,7 @@ const App = () => {
     setSelectedItem(item);
   };
 
-  const menuItems = ['Estres','Ataque de Panico','Ansiedad','Meditacion'];
+  const menuItems = ['Estres','Ataque de Panico','Ansiedad','Meditacion','Concentracion','Mejor sueno'];
 
   return (
     <div className="app">
