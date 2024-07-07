@@ -1,5 +1,5 @@
 .ball {
-  position: relative;
+  position: absolute;
   border-radius: 50%;
   width: 5em;
   height: 5em;
@@ -15,11 +15,11 @@
 }
 
 .inner-ball {
-  position: relative;
+  position: absolute;
   width: 100%;
   height: 100%;
   border-radius: 50%;
-  background-color: lightblue;
+  background-color: #0CF25D;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -27,7 +27,7 @@
 
 .timer {
   font-size: 1.5em;
-  color: #333;
+  color: #034159;
   text-align: center;
 }
 
@@ -36,14 +36,14 @@
   100% {
     width: 5em;
     height: 5em;
-    background-color: lightblue;
+    background-color: #0CF25D;
     transform: scale(1);
     box-shadow: 0 0 30px 2px rgba(64, 224, 208, 0.7);
   }
   50% {
     width: 20em;
     height: 19em;
-    background-color: #98ff98;
+    background-color: #0CF25D;
     transform: scale(1);
     box-shadow: 0 0 30px 10px rgba(64, 224, 208, 0);
   }
