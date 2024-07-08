@@ -55,7 +55,7 @@ const App = () => {
       </div>
       <div className="info">
         <h1>¿Cómo lo uso?</h1>
-        <p>Para empezar, haz clic en 'Empezar'. Comenzará un contador que te ayudará a medir tus tiempos y progreso en el ejercicio. Debes inspirar hasta que la bola alcance su tamaño máximo y luego sostener la respiración mientras la bola comienza a encogerse. Cuando esto suceda, debes exhalar y repetir el ciclo.</p>
+        <p>Para empezar, haz clic en 'Empezar'. Comenzará un contador que te ayudará a medir tus tiempos y progreso en el ejercicio. Debes inhalar hasta que la bola alcance su tamaño máximo y luego sostener la respiración mientras la bola comienza a encogerse. Cuando esto suceda, debes exhalar y repetir el ciclo.</p>
         <ul>
           <li>Estres: 60 segundos</li>
           <li>Ataque de Panico: 300 segundos</li>
