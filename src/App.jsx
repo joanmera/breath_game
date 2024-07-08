@@ -23,7 +23,7 @@ const App = () => {
     }
   };
 
-  const menuItems = ['Estres', 'Ataque de Panico', 'Ansiedad', 'Meditacion', 'Concentracion', 'Mejor sueño'];
+  const menuItems = ['Estres', 'Ataque de Pánico', 'Ansiedad', 'Meditación', 'Concentración', 'Mejor sueño'];
 
   // Efecto para actualizar el contador cada segundo cuando isGrowing es true
   useEffect(() => {
