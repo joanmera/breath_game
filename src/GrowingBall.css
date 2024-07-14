@@ -32,8 +32,7 @@
 }
 
 @keyframes growShrink {
-  0%,
-  100% {
+  0%, 100% {
     width: 5em;
     height: 5em;
     background-color: #0CF25D;
