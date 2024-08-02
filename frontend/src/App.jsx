@@ -48,7 +48,7 @@ const App = () => {
     }
   };
 
-  const menuItems = ['Estrés', 'Ataque de Pánico', 'Ansiedad', 'Meditación', 'Concentración', 'Mejor sueño'];
+  const menuItems = ['Estres', 'Ataque de Pánico', 'Ansiedad', 'Meditación', 'Concentración', 'Mejor sueño'];
 
   // Efecto para actualizar el contador cada segundo cuando isGrowing es true
   useEffect(() => {
@@ -79,11 +79,16 @@ const App = () => {
         </button>
       </div>
       <div className="info">
-        <h2>Recomendaciones</h2>
-        <p>{recomendaciones}</p>
-        <h2>Empecemos:</h2>
-        <p> Haz clic en 'Empezar' para iniciar el contador. Inspira hasta que la bola alcance su tamaño máximo, luego sostén la respiración mientras la bola se encoge. Exhala y repite el ciclo.</p>
-        <p>{tiempo_estimado}</p>
+        <h1>¿Cómo lo uso?</h1>
+        <p>Para empezar, haz clic en 'Empezar'. Comenzará un contador que te ayudará a medir tus tiempos y progreso en el ejercicio. Debes inhalar hasta que la bola alcance su tamaño máximo y luego sostener la respiración mientras la bola comienza a encogerse. Cuando esto suceda, debes exhalar y repetir el ciclo.</p>
+        <ul>
+          <li>Estres: 60 segundos</li>
+          <li>Ataque de Panico: 300 segundos</li>
+          <li>Ansiedad: 120 segundos</li>
+          <li>Meditacion: 300 segundos</li>
+          <li>Concentracion: 60-120 segundos</li>
+          <li>Mejor sueño: 180 segundos</li>
+        </ul>
       </div>
     </div>
   );
