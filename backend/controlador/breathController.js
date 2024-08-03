@@ -3,7 +3,7 @@
 const express = require('express');
 const router = express.Router();
 const { getPaises, createPais, updatePais, deletePais } = require('../models/pais');
-const { getUsuarios, createUsuario, updateUsuario, deleteUsuario } = require('../models/usuario');
+const { getUsuarios, createUsuario,getNextUserId, updateUsuario, deleteUsuario } = require('../models/usuario');
 const { getRegistros, createRegistro, updateRegistro, deleteRegistro } = require('../models/registro');
 
 // Rutas para pais
@@ -118,6 +118,33 @@ router.post('/login', async (req, res) => {
       res.status(401).json({ error: 'Credenciales incorrectas' });
     }
   } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+router.post('/register', async (req, res) => {
+  const { nombre_usuario, contrasena, nombre_completo, correo, pais_id } = req.body;
+
+  // Generar un ID de usuario aleatorio
+  const id_usuario = await getNextUserId();
+
+  try {
+    // Llamar a la función para insertar el nuevo usuario en la base de datos
+    const nuevoUsuario = await createUsuario({
+      id_usuario,
+      nombre_usuario,
+      contrasena,
+      nombre_completo,
+      correo,
+      pais_id,
+      activo: true, // Valor por defecto
+      perfil_administrador: false, // Valor por defecto
+      perfil_publico: true // Valor por defecto
+    });
+
+    res.status(201).json({ message: 'Usuario registrado exitosamente', userId: nuevoUsuario.id_usuario });
+  } catch (error) {
+    console.error('Error al registrar usuario:', error);
     res.status(500).json({ error: error.message });
   }
 });
