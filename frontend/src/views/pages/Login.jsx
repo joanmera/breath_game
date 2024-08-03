@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // Importa useNavigate
 import './Login.css';
-import Register from '../Register';  // Ajusta la ruta si es necesario
-import { Link } from 'react-router-dom';
+import { Link, Outlet} from 'react-router-dom';
+
 
 const LoginPage = () => {
   const [correo, setEmail] = useState('');
   const [contrasena, setPassword] = useState('');
   const [error, setError] = useState('');
-  const [showRegister, setShowRegister] = useState(false);
-  const navigate = useNavigate(); // Inicializa useNavigate
+  const [showSubmitButton, setShowSubmitButton] = useState(true);
+  const [isRegisterVisible, setIsRegisterVisible] = useState(true);
+  const [isCancelVisible, setIsCancelVisible] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -44,15 +44,20 @@ const LoginPage = () => {
     }
   };
 
-  const handleRegisterClick = (e) => {
-    e.preventDefault();
-    setShowRegister(true);
+  const handleRegisterClick = () => {
+    setShowSubmitButton(false);
+    setIsRegisterVisible(false);
+    setIsCancelVisible(true);
+  };
+
+  const handleCancelClick = () => {
+    setShowSubmitButton(true);
+    setIsRegisterVisible(true); 
+    setIsCancelVisible(false);
   };
 
   return (
     <div className="login-container">
-      {!showRegister ? (
-        <>
           <h2>Iniciar sesión</h2>
           <form onSubmit={handleSubmit}>
             <div>
@@ -76,13 +81,19 @@ const LoginPage = () => {
               />
             </div>
             {error && <p className="error">{error}</p>}
-            <button type="submit">Iniciar sesión</button>
+            <Outlet />
+            {showSubmitButton && <button type="submit">Iniciar sesión</button>}
           </form>
-          <Link to="/login/register" className="button-link" onClick={handleRegisterClick}>Registrarse</Link>
-        </>
-      ) : (
-        <Register />
-      )}
+          {isRegisterVisible && (
+            <div>
+              <Link to="/login/register" className="button-link" onClick={handleRegisterClick}>Registrarse</Link>
+            </div>
+          )}
+          {isCancelVisible && (
+            <div>
+              <Link to="/login" className="button-link" onClick={handleCancelClick} >Cancelar</Link>
+            </div>
+          )}
     </div>
   );
 };
