@@ -1,14 +1,16 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const breathController = require('./controlador/breathController');
+const cors = require('cors');
+const routes = require('./controlador/breathController'); // Ajusta la ruta según la ubicación de tu archivo de rutas
 
 const app = express();
-const PORT = 3001;
+const port = 3000; // O el puerto que estés usando
 
-app.use(bodyParser.json());
-app.use('/api', breathController);
+app.use(cors()); // Permite solicitudes de origen cruzado (CORS)
+app.use(bodyParser.json()); // Analiza las solicitudes con cuerpo JSON
 
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+app.use('/api', routes); // Registra las rutas bajo el prefijo /api
+
+app.listen(port, () => {
+  console.log(`Servidor escuchando en http://localhost:${port}`);
 });
-

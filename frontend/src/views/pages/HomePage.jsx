@@ -3,19 +3,22 @@ import { Link } from 'react-router-dom';
 import './HomePage.css';
 
 const Home = () => {
-  return(
-  <div className="frame">
-    <div className="title">
-      <h1>BIENVENIDO</h1>
+  return (
+    <div className="homepage-container">
+      <div className="homepage-header">
+        <h1>Bienvenido a Breath Game</h1>
+      </div>
+      <div className="homepage-content">
+        <h2 className="homepage-tagline">"Respirar bien es vital para el ser humano, ya que una respiración adecuada mejora el bienestar físico y mental, promoviendo una vida más saludable y plena."</h2>
+        <p className="homepage-description">
+          Explora nuestra herramienta para ayudarte a mejorar tu respiración y alcanzar un estado óptimo de bienestar.
+        </p>
+        <div className="homepage-buttons">
+          <Link to="/login" className="button-link">Iniciar Sesión</Link>
+          <Link to="/app" className="button-link">Entrar como Invitado</Link>
+        </div>
+      </div>
     </div>
-    <div className="gpt">
-      <h2>[frase gpt]</h2>
-    </div>
-    <div className="buttons">
-      <Link to="/login" className="button-link">login</Link>
-      <Link to="/app" className="button-link">guest</Link>
-    </div>
-  </div>
   );
 };
 

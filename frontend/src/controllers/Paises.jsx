@@ -1,23 +1,38 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import ListaPaises from './ListaPaises'; // Asegúrate de que la ruta sea correcta
 
-const ListaPaises = ({ options, onSelect }) => {
-    const [selectedOption, setSelectedOption] = useState('');
+const Pais = () => {
+    const [countries, setCountries] = useState([]);
+    const [selectedCountry, setSelectedCountry] = useState('');
 
-    const handleChange = (event) => {
-        setSelectedOption(event.target.value);
-        onSelect(event.target.value);
+    useEffect(() => {
+        const fetchCountries = async () => {
+            try {
+                const response = await fetch('http://localhost:3000/api/countries');
+                const data = await response.json();
+                setCountries(data);
+            } catch (error) {
+                console.error('Error al obtener los países:', error);
+            }
+        };
+
+        fetchCountries();
+    }, []);
+
+    const handleCountrySelect = (country) => {
+        setSelectedCountry(country);
+        console.log('País seleccionado:', country);
     };
 
     return (
-        <select value={selectedOption} onChange={handleChange}>
-            <option value="" disabled>Selecciona un pais</option>
-            {options.map((option, index) => (
-                <option key={index} value={option}>
-                    {option}
-                </option>
-            ))}
-        </select>
+        <div>
+            <h1>Selecciona un país</h1>
+            <ListaPaises 
+                options={countries.map(country => country.nombre)} 
+                onSelect={handleCountrySelect} 
+            />
+        </div>
     );
 };
 
-export default ListaPaises;
+export default Pais;
