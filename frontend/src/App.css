@@ -50,7 +50,6 @@ body,
   margin-top: 20px;
   flex-direction: column;
   align-content: space-between;
-
 }
 
 .info {
@@ -62,26 +61,24 @@ body,
   margin-left: 1vw;
   flex-direction: column;
   display: flex;
-  background-color:#007f37;
+  background-color: #007f37;
   border-radius: 1vw;
+  color: white;
 }
 
 .info h2 {
   background-color: var(--color-b);
-    color: white;
-    padding: 10px;
-    text-align: center;
-    border-radius: 1vw;
-    display: inline-block;
-   
-    
+  color: white;
+  padding: 10px;
+  text-align: center;
+  border-radius: 1vw;
+  display: inline-block;
 }
 
 .info p {
   margin-top: 5px;
   font-size: 15px;
   margin-bottom: 0;
-  
 }
 
 .info ul {
@@ -93,6 +90,7 @@ body,
   margin-top: 0;
   font-size: 15px;
   margin-bottom: 0;
+  color: white;
 }
 .grow-button {
   margin-top: auto;
@@ -100,16 +98,12 @@ body,
   font-size: 1em;
   cursor: pointer;
   display: block;
-  color: white;
 }
 
 .grow-button:hover {
   background-color: var(--color-c);
 }
-.recomedaciones{
+.recomedaciones {
   display: flex;
   align-items: center;
-
-
-
 }

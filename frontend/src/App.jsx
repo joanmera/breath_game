@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
-import './GrowingBall.css';
-import LateralMenu from './LateralMenu';
+import './views/LateralMenu';
+import './views/GrowingBall.css';
+import LateralMenu from './views/LateralMenu';
 
 const App = () => {
   const [selectedItem, setSelectedItem] = useState('Ataque de Pánico');
