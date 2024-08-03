@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import './Login.css'; 
-import { Link } from 'react-router-dom';
+import { Link, Outlet } from 'react-router-dom';
 
 const LoginPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [showSubmitButton, setShowSubmitButton] = useState(true);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -16,6 +17,10 @@ const LoginPage = () => {
     } else {
       setError('Credenciales incorrectas');
     }
+  };
+
+  const handleRegisterClick = () => {
+    setShowSubmitButton(false);
   };
 
   return (
@@ -43,9 +48,10 @@ const LoginPage = () => {
           />
         </div>
         {error && <p className="error">{error}</p>}
-        <button type="submit">Iniciar sesión</button>
+        <Outlet />
+        {showSubmitButton && <button type="submit">Iniciar sesión</button>}
       </form>
-      <Link to="/login/register" className="button-link">Registrarse</Link>
+      <Link to="/login/register" className="button-link" onClick={handleRegisterClick}>Registrarse</Link>
     </div>
   );
 };
