@@ -10,4 +10,14 @@ const createPais = async (nombre) => {
   return res.rows[0];
 };
 
-module.exports = { getPaises, createPais };
+const updatePais = async (id, nombre) => {
+  const res = await pool.query('UPDATE pais SET nombre = $1 WHERE id_pais = $2 RETURNING *', [nombre, id]);
+  return res.rows[0];
+};
+
+const deletePais = async (id) => {
+  await pool.query('DELETE FROM pais WHERE id_pais = $1', [id]);
+};
+
+module.exports = { getPaises, createPais, updatePais, deletePais };
+
