@@ -31,3 +31,16 @@ CREATE TABLE registro (
     FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario)
 );
 ----------------------------------------------
+
+----------INSERT PAISES ------------------------
+INSERT INTO pais (id_pais, nombre) VALUES
+(1, 'Argentina'),
+(2, 'Brasil'),
+(3, 'Chile'),
+(4, 'Colombia'),
+(5, 'Ecuador'),
+(6, 'Perú'),
+(7, 'Uruguay'),
+(8, 'Paraguay'),
+(9, 'México'),
+(10, 'Venezuela');

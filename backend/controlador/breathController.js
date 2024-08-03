@@ -5,7 +5,6 @@ const { getRegistros, createRegistro, updateRegistro, deleteRegistro } = require
 
 const router = express.Router();
 
-
 router.get('/pais', async (req, res) => {
   try {
     const paises = await getPaises();

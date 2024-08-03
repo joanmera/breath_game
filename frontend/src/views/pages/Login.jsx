@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Login.css'; 
 import { Link, Outlet } from 'react-router-dom';
 
@@ -7,6 +7,9 @@ const LoginPage = () => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [showSubmitButton, setShowSubmitButton] = useState(true);
+  const [showRegisterButton, setShowRegisterButton] = useState(true);
+  const [isRegisterVisible, setIsRegisterVisible] = useState(true);
+  const [isCancelVisible, setIsCancelVisible] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -21,6 +24,16 @@ const LoginPage = () => {
 
   const handleRegisterClick = () => {
     setShowSubmitButton(false);
+    setIsRegisterVisible(false);
+    setIsCancelVisible(true)
+    setShowRegisterButton(true)
+  };
+
+  const handleCancelClick = () => {
+    setShowSubmitButton(true);
+    setIsRegisterVisible(true);
+    setIsCancelVisible(false)
+    setShowRegisterButton(false)
   };
 
   return (
@@ -51,7 +64,17 @@ const LoginPage = () => {
         <Outlet />
         {showSubmitButton && <button type="submit">Iniciar sesión</button>}
       </form>
-      <Link to="/login/register" className="button-link" onClick={handleRegisterClick}>Registrarse</Link>
+      {isRegisterVisible && (
+        <div>
+          <Link to="/login/register" className="button-link" onClick={handleRegisterClick}>Registrarse</Link>
+        </div>
+      )}
+      {isCancelVisible && (
+        <div>
+          <Link to="/login" className="button-link" onClick={handleCancelClick} >Cancelar</Link>
+        </div>
+      )}
+      {showRegisterButton && <button type="submit">Crear cuenta</button>}
     </div>
   );
 };

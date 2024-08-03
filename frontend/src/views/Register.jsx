@@ -1,7 +1,13 @@
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+
 import ListaPaises from '../controllers/Paises.jsx';
 
+const baseURL = "http://localhost:3001/paises";
+
 const Register = () => {
-    const options = ['Pais 1', 'Pais 2', 'Pais 3'];
+
+    const options = ['ecu', 'peru']
 
     const handleSelect = (selectedOption) => {
         console.log('Selected option:', selectedOption);
