@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './Login.css';
 import { Link, Outlet} from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
+
 
 const LoginPage = () => {
   const [correo, setEmail] = useState('');
