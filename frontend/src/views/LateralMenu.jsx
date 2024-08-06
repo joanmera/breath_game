@@ -1,7 +1,8 @@
 import React from 'react';
 import './LateralMenu.css';
+import { Link } from 'react-router-dom';
 
-const LateralMenu = ({ items, onSelect }) => {
+const LateralMenu = ({ items, onSelect, onConfigClick }) => {
   return (
     <div className="lateral-menu">
       {items.map((item, index) => (
@@ -9,6 +10,11 @@ const LateralMenu = ({ items, onSelect }) => {
           {item}
         </button>
       ))}
+      <div>
+        <Link to="/app/settings" className="menu-button" onClick={onConfigClick}>
+          Configuracion
+        </Link>
+      </div>
     </div>
   );
 };

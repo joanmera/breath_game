@@ -79,6 +79,7 @@ const Register = () => {
   return (
     <div className="extend">
       {!registrationSuccess ? (
+        <>
         <form onSubmit={handleSubmit}>
           <div>
             <label htmlFor="fullName">Nombre Completo:</label>
@@ -129,6 +130,8 @@ const Register = () => {
           </div>
           <button type="submit">Registrar</button>
         </form>
+        <Link to="/login" className="button-link">Cancelar</Link>
+        </>
       ) : (
         <div>
           <h2>Registro exitoso</h2>
