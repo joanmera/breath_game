@@ -36,10 +36,10 @@ body,
   padding: 20px;
   flex-grow: 1;
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   flex-direction: column;
   align-items: center;
-  width: 40vw;
+  width: 45vw;
   color: white;
   border: 5px solid #ff0000;
   border-color: white;
@@ -50,6 +50,12 @@ body,
   margin-top: 20px;
   flex-direction: column;
   align-content: space-between;
+}
+
+.content h1{
+  color:white;
+  margin: 4px;
+  height: 2em;
 }
 
 .info {
@@ -100,10 +106,59 @@ body,
   display: block;
 }
 
-.grow-button:hover {
-  background-color: var(--color-c);
-}
 .recomedaciones {
   display: flex;
   align-items: center;
 }
+
+.config-button {
+  margin: 10px;
+  padding: 10px 20px;
+  font-size: 2.5vh;
+  font-weight: 600;
+  color: #ffffff;
+  background-color: #007f37;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.config-button:hover {
+  color: #000000;
+  background-color: var(--color-e); /* Color verde oscuro al pasar el cursor */
+}
+
+.data-table {
+  width: 100%; /* Ajustar para que la tabla ocupe todo el ancho del contenedor */
+  border-collapse: collapse;
+  margin-top: 20px;
+  table-layout: fixed; /* Asegura que las columnas mantengan un tamaño fijo */
+}
+
+.data-table th,
+.data-table td {
+  border: 1px solid #ddd;
+  padding: 6px; /* Reducir padding para evitar deformación */
+  text-align: left;
+  color: #000000; /* Mantener el color del texto en negro */
+  word-wrap: break-word; /* Permite que el texto largo se ajuste dentro de la celda */
+  font-size: 0.75em; /* Reducir el tamaño de la fuente */
+  font-weight: normal; /* Hacer el texto menos grueso */
+}
+
+.data-table th {
+  background-color: #007f37; /* Mantener el color verde para los encabezados */
+  color: #000000; /* Mantener el color del texto en negro */
+  font-size: 0.75em; /* Reducir el tamaño de la fuente */
+  font-weight: normal; /* Hacer el texto menos grueso */
+}
+
+.data-table tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.data-table tr:hover {
+  background-color: #ddd;
+}
+

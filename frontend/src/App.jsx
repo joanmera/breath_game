@@ -1,4 +1,3 @@
-// App.js
 import React, { useState, useEffect } from "react";
 import { Link, Outlet } from "react-router-dom";
 import "./App.css";
@@ -12,11 +11,25 @@ const App = () => {
   const [ballClass, setBallClass] = useState("ball");
   const [recomendaciones, setRecomendaciones] = useState("");
   const [tiempo_estimado, setTexto] = useState("");
-
   const [ShowHideBall, setHideBall] = useState(true);
+  const [showRegistroTable, setShowRegistroTable] = useState(false);
+  const [showUsuariosTable, setShowUsuariosTable] = useState(false);
+  const [usuarios, setUsuarios] = useState([]);
+  const [registros, setRegistros] = useState([]);
+
+  // Variables para el seguimiento de ciclos y tiempos
+  const [ciclos, setCiclos] = useState(0);
 
   const handleSelect = (item) => {
     setSelectedItem(item);
+
+    if (item === "Configuración") {
+      setHideBall(false);
+      setShowRegistroTable(false);
+      setShowUsuariosTable(false);
+    } else {
+      setHideBall(true);
+    }
 
     if (item === "Estrés") {
       setRecomendaciones(
@@ -59,8 +72,41 @@ const App = () => {
     if (!isGrowing) {
       setTimer(0); // Reinicia el contador cuando se empieza de nuevo
       setBallClass("ball grow");
+      setCiclos(0);
     } else {
       setBallClass("ball");
+    }
+  };
+
+  const handleRegistroClick = () => {
+    setShowRegistroTable(true);
+    setShowUsuariosTable(false);
+    fetchRegistros(); // Llamar a la función para obtener los registros cuando se selecciona "Registro"
+  };
+
+  const handleUsuariosClick = () => {
+    setShowRegistroTable(false);
+    setShowUsuariosTable(true);
+    fetchUsuarios(); // Llamar a la función para obtener los usuarios cuando se selecciona "Usuarios"
+  };
+
+  const fetchUsuarios = async () => {
+    try {
+      const response = await fetch("http://localhost:3000/api/usuario"); // Cambia la URL si es necesario
+      const data = await response.json();
+      setUsuarios(data);
+    } catch (error) {
+      console.error("Error fetching users:", error);
+    }
+  };
+
+  const fetchRegistros = async () => {
+    try {
+      const response = await fetch("http://localhost:3000/api/registro"); // Cambia la URL si es necesario
+      const data = await response.json();
+      setRegistros(data);
+    } catch (error) {
+      console.error("Error fetching registros:", error);
     }
   };
 
@@ -71,6 +117,7 @@ const App = () => {
     "Meditación",
     "Concentración",
     "Mejor sueño",
+    "Configuración"
   ];
 
   // Efecto para actualizar el contador cada segundo cuando isGrowing es true
@@ -87,38 +134,125 @@ const App = () => {
     return () => clearInterval(intervalId);
   }, [isGrowing]);
 
+  // Efecto para manejar el ciclo de crecimiento y contracción de la bola
+  useEffect(() => {
+    if (isGrowing) {
+      const ballElement = document.querySelector('.ball');
+      const handleAnimationIteration = (event) => {
+        if (event.animationName === 'growShrink') {
+          if (ballClass.includes('grow')) {
+            // La bola ha alcanzado su punto máximo - Inhalación
+            console.log(`Inhalación: ${timer} segundos`);
+          } else {
+            // La bola ha alcanzado su punto mínimo - Exhalación
+            setCiclos((prevCiclos) => prevCiclos + 1); // Incrementar ciclos
+            console.log(`Exhalación: ${timer} segundos`);
+            console.log(`Ciclos completados: ${ciclos + 1}`);
+          }
+        }
+      };
+
+      ballElement.addEventListener('animationiteration', handleAnimationIteration);
+
+      return () => {
+        ballElement.removeEventListener('animationiteration', handleAnimationIteration);
+      };
+    }
+  }, [isGrowing, timer, ballClass, ciclos]);
+
   return (
     <div className="app">
       <LateralMenu items={menuItems} onSelect={handleSelect} onConfigClick={() => setHideBall(false)} />
-      {ShowHideBall && (
-        <div className="content">
-          <h1>{selectedItem}</h1>
-          <div className={ballClass}>
+      <div className="content">
+        <h1>{selectedItem}</h1>
+        {ShowHideBall ? (
+          <div className={ballClass} onClick={handleButtonClick}>
             <div className="inner-ball">
               {isGrowing && <span className="timer">{timer} seg</span>}
             </div>
+            {!isGrowing && (
+              <i className="fas fa-hand-pointer icon-click"></i> /* Icono de clic */
+            )}
           </div>
-          <button className="grow-button" onClick={handleButtonClick}>
-            {isGrowing ? "Detener" : "Empezar"}
-          </button>
-        </div>
-      )}
+        ) : (
+          <div>
+            <button className="config-button" onClick={handleRegistroClick}>Registro</button>
+            <button className="config-button" onClick={handleUsuariosClick}>Usuarios</button>
+
+            {showRegistroTable && (
+              <table className="data-table">
+                <thead>
+                  <tr>
+                    <th>Tiempo</th>
+                    <th>Inhalaciones</th>
+                    <th>Exhalaciones</th>
+                    <th>Fecha</th>
+                    <th>Ciclos</th>
+                    <th>Id Usuario</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {registros.map((registro) => (
+                    <tr key={registro.id}>
+                      <td>{registro.tiempo}</td>
+                      <td>{registro.inhalaciones}</td>
+                      <td>{registro.exhalaciones}</td>
+                      <td>{registro.fecha}</td>
+                      <td>{registro.ciclos}</td>
+                      <td>{registro.id_usuario}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            )}
+
+            {showUsuariosTable && (
+              <table className="data-table">
+                <thead>
+                  <tr>
+                    <th>ID Usuario</th>
+                    <th>Nombre Usuario</th>
+                    <th>Contraseña</th>
+                    <th>Correo</th>
+                    <th>Activo</th>
+                    <th>Perfil Administrador</th>
+                    <th>País ID</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {usuarios.map((usuario) => (
+                    <tr key={usuario.id_usuario}>
+                      <td>{usuario.id_usuario}</td>
+                      <td>{usuario.nombre_usuario}</td>
+                      <td>{usuario.contrasena}</td>
+                      <td>{usuario.correo}</td>
+                      <td>{usuario.activo ? "Sí" : "No"}</td>
+                      <td>{usuario.perfil_administrador ? "Sí" : "No"}</td>
+                      <td>{usuario.pais_id}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            )}
+          </div>
+        )}
+      </div>
       <Outlet />
       <div className="info">
         <h1>¿Cómo lo uso?</h1>
         <p>
-          Para empezar, haz clic en 'Empezar'. Comenzará un contador que te
+          Para empezar, haz clic en la bola. Comenzará un contador que te
           ayudará a medir tus tiempos y progreso en el ejercicio. Debes inhalar
           hasta que la bola alcance su tamaño máximo y luego sostener la
           respiración mientras la bola comienza a encogerse. Cuando esto suceda,
           debes exhalar y repetir el ciclo.
         </p>
         <ul>
-          <li>Estres: 60 segundos</li>
-          <li>Ataque de Panico: 300 segundos</li>
+          <li>Estrés: 60 segundos</li>
+          <li>Ataque de Pánico: 300 segundos</li>
           <li>Ansiedad: 120 segundos</li>
-          <li>Meditacion: 300 segundos</li>
-          <li>Concentracion: 60-120 segundos</li>
+          <li>Meditación: 300 segundos</li>
+          <li>Concentración: 60-120 segundos</li>
           <li>Mejor sueño: 180 segundos</li>
         </ul>
       </div>

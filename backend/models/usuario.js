@@ -1,7 +1,7 @@
 const pool = require('../config/database');
 
 const getUsuarios = async () => {
-  const result = await pool.query('SELECT correo, contrasena FROM usuario'); // Ajusta la consulta según tu estructura de tabla
+  const result = await pool.query('SELECT id_usuario,nombre_usuario,contrasena,correo,activo,perfil_administrador,pais_id FROM usuario'); // Ajusta la consulta según tu estructura de tabla
   return result.rows;
 };
 
