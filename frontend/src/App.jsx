@@ -16,9 +16,7 @@ const App = () => {
   const [showUsuariosTable, setShowUsuariosTable] = useState(false);
   const [usuarios, setUsuarios] = useState([]);
   const [registros, setRegistros] = useState([]);
-
-  // Variables para el seguimiento de ciclos y tiempos
-  const [ciclos, setCiclos] = useState(0);
+  const [userId, setUserId] = useState(2); // Aquí debes obtener el ID del usuario logueado
 
   const handleSelect = (item) => {
     setSelectedItem(item);
@@ -67,6 +65,30 @@ const App = () => {
     }
   };
 
+  const saveRegistro = async ({ tiempo, inhalaciones, exhalaciones, ciclos, id_usuario }) => {
+    const response = await fetch("http://localhost:3000/api/registro", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        tiempo,
+        inhalaciones,
+        exhalaciones,
+        fecha: new Date().toISOString().split("T")[0], // Fecha actual
+        ciclos,
+        id_usuario,
+      }),
+    });
+
+    if (!response.ok) {
+      console.error("Error al guardar el registro:", response.statusText);
+    } else {
+      const data = await response.json();
+      console.log("Registro guardado exitosamente:", data);
+    }
+  };
+
   const handleButtonClick = () => {
     setIsGrowing(!isGrowing);
     if (!isGrowing) {
@@ -75,6 +97,25 @@ const App = () => {
       setCiclos(0);
     } else {
       setBallClass("ball");
+
+      // El juego ha terminado, guarda los resultados finales
+      const finalInhalacion = parseInt(localStorage.getItem('inhalacion'));
+      const finalExhalacion = parseInt(localStorage.getItem('exhalacion'));
+      const finalCiclos = parseFloat(localStorage.getItem('ciclos'));
+
+      console.log(`Resultados finales:`);
+      console.log(`Inhalación final: ${finalInhalacion} segundos`);
+      console.log(`Exhalación final: ${finalExhalacion} segundos`);
+      console.log(`Ciclos completados: ${finalCiclos}`);
+
+      // Guardar el registro en la base de datos
+      saveRegistro({
+        tiempo: timer, // Tiempo total
+        inhalaciones: finalInhalacion,
+        exhalaciones: finalExhalacion,
+        ciclos: finalCiclos,
+        id_usuario: userId, // ID del usuario logueado
+      });
     }
   };
 
@@ -143,11 +184,16 @@ const App = () => {
           if (ballClass.includes('grow')) {
             // La bola ha alcanzado su punto máximo - Inhalación
             console.log(`Inhalación: ${timer} segundos`);
-          } else {
-            // La bola ha alcanzado su punto mínimo - Exhalación
-            setCiclos((prevCiclos) => prevCiclos + 1); // Incrementar ciclos
-            console.log(`Exhalación: ${timer} segundos`);
-            console.log(`Ciclos completados: ${ciclos + 1}`);
+            const inhalacion = timer;
+            console.log(`Exhalación: ${timer + 1} segundos`);
+            const exhalacion = timer + 1;
+            const ciclos = inhalacion / 10;
+            console.log(`Ciclos: ${ciclos}`);
+
+            // Guardar en localStorage
+            localStorage.setItem('inhalacion', inhalacion);
+            localStorage.setItem('exhalacion', exhalacion);
+            localStorage.setItem('ciclos', ciclos);
           }
         }
       };
@@ -158,7 +204,24 @@ const App = () => {
         ballElement.removeEventListener('animationiteration', handleAnimationIteration);
       };
     }
-  }, [isGrowing, timer, ballClass, ciclos]);
+  }, [isGrowing, timer, ballClass]);
+
+  // Leer valores de localStorage al cargar el componente
+  useEffect(() => {
+    const savedInhalacion = localStorage.getItem('inhalacion');
+    const savedExhalacion = localStorage.getItem('exhalacion');
+    const savedCiclos = localStorage.getItem('ciclos');
+
+    if (savedInhalacion) {
+      console.log(`Inhalación guardada: ${savedInhalacion} segundos`);
+    }
+    if (savedExhalacion) {
+      console.log(`Exhalación guardada: ${savedExhalacion} segundos`);
+    }
+    if (savedCiclos) {
+      console.log(`Ciclos guardados: ${savedCiclos}`);
+    }
+  }, []);
 
   return (
     <div className="app">
