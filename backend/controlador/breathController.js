@@ -47,14 +47,19 @@ router.post('/usuario', async (req, res) => {
 });
 
 router.put('/usuario/:id', async (req, res) => {
+  const { id } = req.params; // Asegúrate de que id se define fuera del try/catch
   try {
-    const { id } = req.params;
-    const actualizadoUsuario = await updateUsuario(id, req.body);
-    res.json(actualizadoUsuario);
+    console.log(req.params); // Añade esto para depuración
+    console.log(`Actualizando usuario con ID: ${id}`); // Depuración adicional
+    const updatedUsuario = await updateUsuario(id, req.body);
+    res.json(updatedUsuario);
   } catch (error) {
+    console.error(`Error updating user with ID ${id}:`, error); // Ahora id está disponible aquí
     res.status(500).json({ error: error.message });
   }
 });
+
+
 
 router.delete('/usuario/:id', async (req, res) => {
   try {
@@ -107,6 +112,7 @@ router.put('/registro/:id', async (req, res) => {
     const actualizadoRegistro = await updateRegistro(id, req.body);
     res.json(actualizadoRegistro);
   } catch (error) {
+    console.error(`Error updating record with ID ${id}:`, error);
     res.status(500).json({ error: error.message });
   }
 });
@@ -117,6 +123,7 @@ router.delete('/registro/:id', async (req, res) => {
     await deleteRegistro(id);
     res.json({ message: 'Registro eliminado' });
   } catch (error) {
+    console.error(`Error deleting record with ID ${id}:`, error);
     res.status(500).json({ error: error.message });
   }
 });

@@ -10,11 +10,11 @@ const LateralMenu = ({ items, onSelect, onConfigClick }) => {
           {item}
         </button>
       ))}
-      <div>
+      {/* <div>
         <Link to="/app/settings" className="menu-button" onClick={onConfigClick}>
           Configuracion
         </Link>
-      </div>
+      </div> */}
     </div>
   );
 };

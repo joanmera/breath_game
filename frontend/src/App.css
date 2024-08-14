@@ -7,11 +7,7 @@
 }
 
 body {
-  background-image: radial-gradient(
-    circle,
-    var(--color-b) 0%,
-    var(--color-a) 100%
-  );
+  background-image: radial-gradient(circle, var(--color-b) 0%, var(--color-a) 100%);
   height: 100%;
   margin: 0;
   overflow: hidden;
@@ -52,15 +48,14 @@ body,
   align-content: space-between;
 }
 
-.content h1{
-  color:white;
+.content h1 {
+  color: white;
   margin: 4px;
   height: 2em;
 }
 
 .info {
   width: 20vw;
-  background-color: (var(--color-e));
   padding: 10px;
   margin-right: 5vw;
   height: 75vh;
@@ -98,6 +93,7 @@ body,
   margin-bottom: 0;
   color: white;
 }
+
 .grow-button {
   margin-top: auto;
   padding: 0.5em 1em;
@@ -126,39 +122,129 @@ body,
 
 .config-button:hover {
   color: #000000;
-  background-color: var(--color-e); /* Color verde oscuro al pasar el cursor */
+  background-color: var(--color-e);
+}
+
+.data-table-container {
+  overflow-x: auto;
+  overflow-y: auto;
+  height: 300px;
+  width: 100%;
+  max-height: 100%;
+  max-width: 100%;
+  border: 1px solid #ddd;
+  box-sizing: border-box;
 }
 
 .data-table {
-  width: 100%; /* Ajustar para que la tabla ocupe todo el ancho del contenedor */
+  width: 100%;
   border-collapse: collapse;
-  margin-top: 20px;
-  table-layout: fixed; /* Asegura que las columnas mantengan un tamaño fijo */
+  table-layout: fixed;
 }
 
 .data-table th,
 .data-table td {
   border: 1px solid #ddd;
-  padding: 6px; /* Reducir padding para evitar deformación */
+  padding: 6px;
   text-align: left;
-  color: #000000; /* Mantener el color del texto en negro */
-  word-wrap: break-word; /* Permite que el texto largo se ajuste dentro de la celda */
-  font-size: 0.75em; /* Reducir el tamaño de la fuente */
-  font-weight: normal; /* Hacer el texto menos grueso */
+  color: #000000;
+  word-wrap: break-word;
+  font-size: 0.75em;
+  font-weight: normal;
+  vertical-align: middle; /* Centra verticalmente el contenido de las celdas */
 }
 
 .data-table th {
-  background-color: #007f37; /* Mantener el color verde para los encabezados */
-  color: #000000; /* Mantener el color del texto en negro */
-  font-size: 0.75em; /* Reducir el tamaño de la fuente */
-  font-weight: normal; /* Hacer el texto menos grueso */
+  background-color: #007f37;
+  color: #000000;
+  font-size: 0.75em;
+  font-weight: normal;
 }
 
 .data-table tr:nth-child(even) {
-  background-color: #f2f2f2;
+  background-color: var(--color-e);
+  color:white;
 }
 
 .data-table tr:hover {
   background-color: #ddd;
+}
+
+.data-table button {
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  text-align: center;
+  display: block;
+  width: 100%; /* Hacer que el botón ocupe toda la celda */
+}
+
+.data-table button.edit-btn {
+  background-color: #4CAF50; /* Color verde para editar */
+}
+
+.data-table button.delete-btn {
+  background-color: #f44336; /* Color rojo para eliminar */
+}
+
+.data-table button:hover {
+  opacity: 0.9;
+}
+
+.edit-form {
+  background-color: var(--color-d);
+  padding: 20px;
+  border-radius: 10px;
+  width: 100%;
+  max-width: 400px;
+  max-height: 400px; /* Limita la altura del formulario */
+  overflow-y: auto; /* Permite el desplazamiento vertical si el contenido es demasiado grande */
+  margin: 20px auto;
+}
+
+.edit-form h2 {
+  margin-bottom: 20px;
+}
+
+.edit-form label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.edit-form input[type="text"],
+.edit-form input[type="password"],
+.edit-form input[type="email"] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.edit-form input[type="checkbox"] {
+  margin-right: 10px;
+}
+
+.edit-form button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+.edit-form button[type="submit"] {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.edit-form button[type="button"] {
+  background-color: #f44336;
+  color: white;
+}
+
+.edit-form button:hover {
+  opacity: 0.9;
 }
 
