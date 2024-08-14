@@ -248,3 +248,42 @@ body,
   opacity: 0.9;
 }
 
+@media (max-width: 768px) {
+  .content, .info {
+    width: 90vw;
+    height: auto; /* Dejar que el contenido ajuste la altura */
+  }
+
+  .content h1 {
+    font-size: 1.8rem;
+  }
+
+  .info h2 {
+    font-size: 1.2rem;
+  }
+}
+
+/* Móviles */
+@media (max-width: 480px) {
+  .content, .info {
+    width: 100vw;
+    margin: 0; /* Eliminar márgenes en móviles para aprovechar el espacio */
+    border-radius: 0; /* Bordes rectos en móviles */
+  }
+
+  .content h1 {
+    font-size: 1.5rem;
+  }
+
+  .info h2 {
+    font-size: 1rem;
+  }
+
+  .config-button {
+    font-size: 1.5vh;
+  }
+
+  .edit-form {
+    width: 90vw; /* Ajustar el ancho del formulario en móviles */
+  }
+}
