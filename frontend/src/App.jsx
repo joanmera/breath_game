@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import "./App.css";
 import "./views/GrowingBall.css";
 import LateralMenu from "./views/LateralMenu";
@@ -16,7 +16,11 @@ const App = () => {
   const [showUsuariosTable, setShowUsuariosTable] = useState(false);
   const [usuarios, setUsuarios] = useState([]);
   const [registros, setRegistros] = useState([]);
-  const [userId, setUserId] = useState(2); // Aquí debes obtener el ID del usuario logueado
+  const [userId, setUserId] = useState(2);
+  const [isGuest, setIsGuest] = useState(false);
+  const [animationDuration, setAnimationDuration] = useState("10s");
+
+  const location = useLocation();
 
   // Variables para manejar la edición de usuarios y registros
   const [editingUser, setEditingUser] = useState(null);
@@ -42,6 +46,12 @@ const App = () => {
     id_usuario: "",
   });
 
+  useEffect(() => {
+    // Verifica si la URL contiene "guest=true" para determinar si el usuario es un invitado
+    const params = new URLSearchParams(location.search);
+    setIsGuest(params.get("guest") === "true");
+  }, [location.search]);
+
   const handleSelect = (item) => {
     setSelectedItem(item);
 
@@ -53,39 +63,54 @@ const App = () => {
       setHideBall(true);
     }
 
-    if (item === "Estrés") {
-      setRecomendaciones(
-        "Reducir el estrés puede ayudar a prevenir problemas de salud mental como la depresión y la ansiedad."
-      );
-      setTexto("Tiempo: 60 segundos");
-    } else if (item === "Ataque de Pánico") {
-      setRecomendaciones(
-        "Practicar técnicas de respiración profunda puede ayudar a calmarte durante un ataque de pánico. Respira lenta y profundamente, enfocándote en inhalar y exhalar de manera controlada."
-      );
-      setTexto("Tiempo: 300 segundos");
-    } else if (item === "Ansiedad") {
-      setRecomendaciones(
-        "El ejercicio físico regular puede reducir los niveles de ansiedad al liberar endorfinas y mejorar tu estado de ánimo. Encuentra actividades físicas que disfrutes y hazlas parte de tu rutina diaria."
-      );
-      setTexto("Tiempo: 120 segundos");
-    } else if (item === "Meditación") {
-      setRecomendaciones(
-        "La meditación es conocida por su capacidad para reducir los niveles de cortisol, la hormona del estrés, en el cuerpo. Beneficios de practicar la meditación."
-      );
-      setTexto("Tiempo: 300 segundos");
-    } else if (item === "Concentración") {
-      setRecomendaciones(
-        "La concentración es muy útil para mejorar la productividad y la eficiencia en tus tareas diarias. Practicar técnicas de concentración puede ayudarte a mantener el enfoque."
-      );
-      setTexto("Tiempo: 60-120 segundos");
-    } else if (item === "Mejor sueño") {
-      setRecomendaciones(
-        "Dormir bien es esencial para la salud física y mental. Establecer una rutina de sueño regular y crear un ambiente relajante puede mejorar la calidad del sueño."
-      );
-      setTexto("Tiempo: 180 segundos");
-    } else {
-      setRecomendaciones("");
-      setTexto("");
+    switch (item) {
+      case "Estrés":
+        setRecomendaciones(
+          "Reducir el estrés puede ayudar a prevenir problemas de salud mental como la depresión y la ansiedad."
+        );
+        setTexto("Tiempo: 60 segundos");
+        setAnimationDuration("9s"); // Cambia la duración de la animación a 6 segundos
+        break;
+      case "Ataque de Pánico":
+        setRecomendaciones(
+          "Practicar técnicas de respiración profunda puede ayudar a calmarte durante un ataque de pánico. Respira lenta y profundamente, enfocándote en inhalar y exhalar de manera controlada."
+        );
+        setTexto("Tiempo: 300 segundos");
+        setAnimationDuration("7s"); // Cambia la duración de la animación a 30 segundos
+        break;
+      case "Ansiedad":
+        setRecomendaciones(
+          "El ejercicio físico regular puede reducir los niveles de ansiedad al liberar endorfinas y mejorar tu estado de ánimo. Encuentra actividades físicas que disfrutes y hazlas parte de tu rutina diaria."
+        );
+        setTexto("Tiempo: 120 segundos");
+        setAnimationDuration("12s"); // Cambia la duración de la animación a 12 segundos
+        break;
+      case "Meditación":
+        setRecomendaciones(
+          "La meditación es conocida por su capacidad para reducir los niveles de cortisol, la hormona del estrés, en el cuerpo. Beneficios de practicar la meditación."
+        );
+        setTexto("Tiempo: 300 segundos");
+        setAnimationDuration("15s"); // Cambia la duración de la animación a 30 segundos
+        break;
+      case "Concentración":
+        setRecomendaciones(
+          "La concentración es muy útil para mejorar la productividad y la eficiencia en tus tareas diarias. Practicar técnicas de concentración puede ayudarte a mantener el enfoque."
+        );
+        setTexto("Tiempo: 60-120 segundos");
+        setAnimationDuration("10s"); // Cambia la duración de la animación a 10 segundos
+        break;
+      case "Mejor sueño":
+        setRecomendaciones(
+          "Dormir bien es esencial para la salud física y mental. Establecer una rutina de sueño regular y crear un ambiente relajante puede mejorar la calidad del sueño."
+        );
+        setTexto("Tiempo: 180 segundos");
+        setAnimationDuration("13s"); // Cambia la duración de la animación a 18 segundos
+        break;
+      default:
+        setRecomendaciones("");
+        setTexto("");
+        setAnimationDuration("10s");
+        break;
     }
   };
 
@@ -123,9 +148,9 @@ const App = () => {
       setBallClass("ball");
 
       // El juego ha terminado, guarda los resultados finales
-      const finalInhalacion = parseInt(localStorage.getItem('inhalacion'));
-      const finalExhalacion = parseInt(localStorage.getItem('exhalacion'));
-      const finalCiclos = parseFloat(localStorage.getItem('ciclos'));
+      const finalInhalacion = parseInt(localStorage.getItem("inhalacion"));
+      const finalExhalacion = parseInt(localStorage.getItem("exhalacion"));
+      const finalCiclos = parseFloat(localStorage.getItem("ciclos"));
 
       console.log(`Resultados finales:`);
       console.log(`Inhalación final: ${finalInhalacion} segundos`);
@@ -158,7 +183,9 @@ const App = () => {
   };
 
   const handleDeleteUser = async (id) => {
-    const isConfirmed = window.confirm("¿Estás seguro de que deseas eliminar este usuario?");
+    const isConfirmed = window.confirm(
+      "¿Estás seguro de que deseas eliminar este usuario?"
+    );
     if (isConfirmed) {
       try {
         const response = await fetch(`http://localhost:3000/api/usuario/${id}`, {
@@ -179,7 +206,9 @@ const App = () => {
   };
 
   const handleDeleteRegistro = async (id) => {
-    const isConfirmed = window.confirm("¿Estás seguro de que deseas eliminar este registro?");
+    const isConfirmed = window.confirm(
+      "¿Estás seguro de que deseas eliminar este registro?"
+    );
     if (isConfirmed) {
       try {
         const response = await fetch(`http://localhost:3000/api/registro/${id}`, {
@@ -231,13 +260,16 @@ const App = () => {
     e.preventDefault();
 
     try {
-      const response = await fetch(`http://localhost:3000/api/usuario/${editingUser.id_usuario}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(userFormData),
-      });
+      const response = await fetch(
+        `http://localhost:3000/api/usuario/${editingUser.id_usuario}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(userFormData),
+        }
+      );
 
       if (response.ok) {
         console.log("Usuario actualizado exitosamente.");
@@ -255,13 +287,16 @@ const App = () => {
     e.preventDefault();
 
     try {
-      const response = await fetch(`http://localhost:3000/api/registro/${editingRegistro.id_registro}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(registroFormData),
-      });
+      const response = await fetch(
+        `http://localhost:3000/api/registro/${editingRegistro.id_registro}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(registroFormData),
+        }
+      );
 
       if (response.ok) {
         console.log("Registro actualizado exitosamente.");
@@ -302,7 +337,7 @@ const App = () => {
     "Meditación",
     "Concentración",
     "Mejor sueño",
-    "Configuración"
+    "Configuración",
   ];
 
   // Efecto para actualizar el contador cada segundo cuando isGrowing es true
@@ -322,10 +357,10 @@ const App = () => {
   // Efecto para manejar el ciclo de crecimiento y contracción de la bola
   useEffect(() => {
     if (isGrowing) {
-      const ballElement = document.querySelector('.ball');
+      const ballElement = document.querySelector(".ball");
       const handleAnimationIteration = (event) => {
-        if (event.animationName === 'growShrink') {
-          if (ballClass.includes('grow')) {
+        if (event.animationName === "growShrink") {
+          if (ballClass.includes("grow")) {
             // La bola ha alcanzado su punto máximo - Inhalación
             console.log(`Inhalación: ${timer} segundos`);
             const inhalacion = timer;
@@ -335,26 +370,32 @@ const App = () => {
             console.log(`Ciclos: ${ciclos}`);
 
             // Guardar en localStorage
-            localStorage.setItem('inhalacion', inhalacion);
-            localStorage.setItem('exhalacion', exhalacion);
-            localStorage.setItem('ciclos', ciclos);
+            localStorage.setItem("inhalacion", inhalacion);
+            localStorage.setItem("exhalacion", exhalacion);
+            localStorage.setItem("ciclos", ciclos);
           }
         }
       };
 
-      ballElement.addEventListener('animationiteration', handleAnimationIteration);
+      ballElement.addEventListener(
+        "animationiteration",
+        handleAnimationIteration
+      );
 
       return () => {
-        ballElement.removeEventListener('animationiteration', handleAnimationIteration);
+        ballElement.removeEventListener(
+          "animationiteration",
+          handleAnimationIteration
+        );
       };
     }
   }, [isGrowing, timer, ballClass]);
 
   // Leer valores de localStorage al cargar el componente
   useEffect(() => {
-    const savedInhalacion = localStorage.getItem('inhalacion');
-    const savedExhalacion = localStorage.getItem('exhalacion');
-    const savedCiclos = localStorage.getItem('ciclos');
+    const savedInhalacion = localStorage.getItem("inhalacion");
+    const savedExhalacion = localStorage.getItem("exhalacion");
+    const savedCiclos = localStorage.getItem("ciclos");
 
     if (savedInhalacion) {
       console.log(`Inhalación guardada: ${savedInhalacion} segundos`);
@@ -369,11 +410,20 @@ const App = () => {
 
   return (
     <div className="app">
-      <LateralMenu items={menuItems} onSelect={handleSelect} onConfigClick={() => setHideBall(false)} />
+      <LateralMenu
+        items={menuItems}
+        onSelect={handleSelect}
+        onConfigClick={() => setHideBall(false)}
+        isGuest={isGuest} // Pasa si el usuario es un invitado o no
+      />
       <div className="content">
         <h1>{selectedItem}</h1>
         {ShowHideBall ? (
-          <div className={ballClass} onClick={handleButtonClick}>
+          <div
+            className={ballClass}
+            style={{ animationDuration: animationDuration }}
+            onClick={handleButtonClick}
+          >
             <div className="inner-ball">
               {isGrowing && <span className="timer">{timer} seg</span>}
             </div>
@@ -383,8 +433,12 @@ const App = () => {
           </div>
         ) : (
           <div>
-            <button className="config-button" onClick={handleRegistroClick}>Registro</button>
-            <button className="config-button" onClick={handleUsuariosClick}>Usuarios</button>
+            <button className="config-button" onClick={handleRegistroClick}>
+              Registro
+            </button>
+            <button className="config-button" onClick={handleUsuariosClick}>
+              Usuarios
+            </button>
 
             {showEditUserForm && (
               <div className="edit-form">
@@ -436,7 +490,12 @@ const App = () => {
                       type="checkbox"
                       name="activo"
                       checked={userFormData.activo}
-                      onChange={() => setUserFormData({ ...userFormData, activo: !userFormData.activo })}
+                      onChange={() =>
+                        setUserFormData({
+                          ...userFormData,
+                          activo: !userFormData.activo,
+                        })
+                      }
                     />
                   </div>
                   <div>
@@ -445,7 +504,13 @@ const App = () => {
                       type="checkbox"
                       name="perfil_administrador"
                       checked={userFormData.perfil_administrador}
-                      onChange={() => setUserFormData({ ...userFormData, perfil_administrador: !userFormData.perfil_administrador })}
+                      onChange={() =>
+                        setUserFormData({
+                          ...userFormData,
+                          perfil_administrador:
+                            !userFormData.perfil_administrador,
+                        })
+                      }
                     />
                   </div>
                   <div>
@@ -454,7 +519,12 @@ const App = () => {
                       type="checkbox"
                       name="perfil_publico"
                       checked={userFormData.perfil_publico}
-                      onChange={() => setUserFormData({ ...userFormData, perfil_publico: !userFormData.perfil_publico })}
+                      onChange={() =>
+                        setUserFormData({
+                          ...userFormData,
+                          perfil_publico: !userFormData.perfil_publico,
+                        })
+                      }
                     />
                   </div>
                   <div>
@@ -468,7 +538,12 @@ const App = () => {
                     />
                   </div>
                   <button type="submit">Actualizar Usuario</button>
-                  <button type="button" onClick={() => setShowEditUserForm(false)}>Cancelar</button>
+                  <button
+                    type="button"
+                    onClick={() => setShowEditUserForm(false)}
+                  >
+                    Cancelar
+                  </button>
                 </form>
               </div>
             )}
@@ -538,7 +613,12 @@ const App = () => {
                     />
                   </div>
                   <button type="submit">Actualizar Registro</button>
-                  <button type="button" onClick={() => setShowEditRegistroForm(false)}>Cancelar</button>
+                  <button
+                    type="button"
+                    onClick={() => setShowEditRegistroForm(false)}
+                  >
+                    Cancelar
+                  </button>
                 </form>
               </div>
             )}
@@ -570,10 +650,22 @@ const App = () => {
                         <td>{registro.ciclos}</td>
                         <td>{registro.id_usuario}</td>
                         <td>
-                          <button className="edit-btn" onClick={() => handleEditRegistro(registro)}>Editar</button>
+                          <button
+                            className="edit-btn"
+                            onClick={() => handleEditRegistro(registro)}
+                          >
+                            Editar
+                          </button>
                         </td>
                         <td>
-                          <button className="delete-btn"  onClick={() => handleDeleteRegistro(registro.id_registro)}>Eliminar</button>
+                          <button
+                            className="delete-btn"
+                            onClick={() =>
+                              handleDeleteRegistro(registro.id_registro)
+                            }
+                          >
+                            Eliminar
+                          </button>
                         </td>
                       </tr>
                     ))}
@@ -606,13 +698,25 @@ const App = () => {
                         <td>{usuario.contrasena}</td>
                         <td>{usuario.correo}</td>
                         <td>{usuario.activo ? "Sí" : "No"}</td>
-                        <td>{usuario.perfil_administrador ? "Sí" : "No"}</td>
+                        <td>
+                          {usuario.perfil_administrador ? "Sí" : "No"}
+                        </td>
                         <td>{usuario.pais_id}</td>
                         <td>
-                          <button className="edit-btn" onClick={() => handleEditUser(usuario)}>Editar</button>
+                          <button
+                            className="edit-btn"
+                            onClick={() => handleEditUser(usuario)}
+                          >
+                            Editar
+                          </button>
                         </td>
                         <td>
-                          <button className="delete-btn" onClick={() => handleDeleteUser(usuario.id_usuario)}>Eliminar</button>
+                          <button
+                            className="delete-btn"
+                            onClick={() => handleDeleteUser(usuario.id_usuario)}
+                          >
+                            Eliminar
+                          </button>
                         </td>
                       </tr>
                     ))}
@@ -627,11 +731,11 @@ const App = () => {
       <div className="info">
         <h1>¿Cómo lo uso?</h1>
         <p>
-          Para empezar, haz clic en la bola. Comenzará un contador que te
-          ayudará a medir tus tiempos y progreso en el ejercicio. Debes inhalar
-          hasta que la bola alcance su tamaño máximo y luego sostener la
-          respiración mientras la bola comienza a encogerse. Cuando esto suceda,
-          debes exhalar y repetir el ciclo.
+          Para empezar, haz clic en la bola. Comenzará un contador que te ayudará
+          a medir tus tiempos y progreso en el ejercicio. Debes inhalar hasta que
+          la bola alcance su tamaño máximo y luego sostener la respiración mientras
+          la bola comienza a encogerse. Cuando esto suceda, debes exhalar y repetir
+          el ciclo.
         </p>
         <ul>
           <li>Estrés: 60 segundos</li>
