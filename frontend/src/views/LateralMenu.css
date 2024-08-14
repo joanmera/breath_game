@@ -41,3 +41,12 @@
     background-color: #dae0e5;
     color: #212529;
   }
+
+@media (max-width: 768px) {
+  .lateral-menu {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 90%;
+  }
+}

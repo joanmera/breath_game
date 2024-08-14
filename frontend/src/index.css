@@ -66,29 +66,13 @@ button:focus-visible {
 
 /* Media Queries para dispositivos */
 
-@media (max-width: 768px) {
+@media (max-width: 750px) {
   h1 {
     font-size: 2.4rem;
   }
 
-  button {
-    padding: 0.5em 1em;
-    font-size: 0.9em;
-  }
-}
-
-@media (max-width: 480px) {
-  h1 {
-    font-size: 1.8rem;
-  }
-
-  body {
+  body{
+    display: flex;
     flex-direction: column;
-    padding: 10px;
-  }
-
-  button {
-    padding: 0.4em 0.8em;
-    font-size: 0.8em;
   }
 }
