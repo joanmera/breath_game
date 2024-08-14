@@ -47,8 +47,11 @@ const Register = () => {
     try {
       // Encuentra el ID del país basado en el nombre seleccionado
       const selectedCountry = countries.find(country => country.nombre === formData.pais);
-      const pais_id = selectedCountry ? selectedCountry.id : null;
-
+      const pais_id = selectedCountry ? selectedCountry.id_pais : null;
+  
+      console.log('Selected Country:', selectedCountry);
+      console.log('Pais ID:', pais_id);
+  
       const response = await fetch('http://localhost:3000/api/register', {
         method: 'POST',
         headers: {
@@ -62,9 +65,9 @@ const Register = () => {
           pais_id
         }),
       });
-
+  
       const result = await response.json();
-
+  
       if (response.ok) {
         console.log('Registro exitoso:', result);
         setRegistrationSuccess(true); // Marca el registro como exitoso
@@ -75,10 +78,12 @@ const Register = () => {
       console.error('Error al enviar la solicitud:', error);
     }
   };
+  
 
   return (
     <div className="extend">
       {!registrationSuccess ? (
+        <>
         <form onSubmit={handleSubmit}>
           <div>
             <label htmlFor="fullName">Nombre Completo:</label>
@@ -129,6 +134,8 @@ const Register = () => {
           </div>
           <button type="submit">Registrar</button>
         </form>
+        <Link to="/login" className="button-link">Cancelar</Link>
+        </>
       ) : (
         <div>
           <h2>Registro exitoso</h2>

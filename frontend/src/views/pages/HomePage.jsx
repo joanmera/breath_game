@@ -15,7 +15,7 @@ const Home = () => {
         </p>
         <div className="homepage-buttons">
           <Link to="/login" className="button-link">Iniciar Sesión</Link>
-          <Link to="/app" className="button-link">Entrar como Invitado</Link>
+          <Link to="/app?guest=true" className="button-link">Entrar como Invitado</Link> {/* Modificado para pasar una query indicando que es un invitado */}
         </div>
       </div>
     </div>

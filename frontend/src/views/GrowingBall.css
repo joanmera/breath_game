@@ -1,5 +1,5 @@
 .ball {
-  position: absolute;
+  position: relative;
   border-radius: 50%;
   width: 5em;
   height: 5em;
@@ -7,19 +7,21 @@
   justify-content: center;
   align-items: center;
   transition: transform 0.5s ease-out;
+  margin-top: 3em;
+  background-color: #0CF25D; /* Color verde original */
+  animation: pulse 1.5s infinite; /* Animación de pulso */
 }
 
 .grow {
-  animation: none; /* Anula la animación general */
   animation: growShrink 10s infinite; /* Aplica la animación de crecimiento */
 }
 
 .inner-ball {
-  position: absolute;
+  position: static;
   width: 100%;
   height: 100%;
   border-radius: 50%;
-  background-color: #0CF25D;
+  background-color: #0CF25D; /* Color verde original */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -27,8 +29,16 @@
 
 .timer {
   font-size: 1.5em;
-  color: #034159;
+  color: #ffffff;
   text-align: center;
+}
+
+.icon-click {
+  position: absolute;
+  font-size: 2em;
+  color: #ffffff;
+  bottom: 10px;
+  animation: bounce 1s infinite; /* Efecto de rebote para llamar la atención */
 }
 
 @keyframes growShrink {
@@ -36,15 +46,42 @@
   100% {
     width: 5em;
     height: 5em;
-    background-color: #0CF25D;
+    background-color: #0CF25D; /* Color verde original */
     transform: scale(1);
     box-shadow: 0 0 30px 2px rgba(64, 224, 208, 0.7);
   }
   50% {
-    width: 20em;
-    height: 19em;
-    background-color: #0CF25D;
+    width: 22em;
+    height: 21em;
+    background-color: #0CF25D; /* Color verde original */
     transform: scale(1);
     box-shadow: 0 0 30px 10px rgba(64, 224, 208, 0);
+  }
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 15px 5px rgba(255, 215, 0, 0.5);
+  }
+  50% {
+    transform: scale(1.1);
+    box-shadow: 0 0 30px 10px rgba(255, 215, 0, 0.7);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 15px 5px rgba(255, 215, 0, 0.5);
+  }
+}
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-10px);
+  }
+  60% {
+    transform: translateY(-5px);
   }
 }
