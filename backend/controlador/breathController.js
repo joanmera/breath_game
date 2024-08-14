@@ -4,7 +4,7 @@ const express = require('express');
 const router = express.Router();
 const { getPaises, createPais, updatePais, deletePais } = require('../models/pais');
 const { getUsuarios, createUsuario,getNextUserId, updateUsuario, deleteUsuario } = require('../models/usuario');
-const { getRegistros, createRegistro, updateRegistro, deleteRegistro } = require('../models/registro');
+const { getRegistros,getNextRegistroId, createRegistro, updateRegistro, deleteRegistro } = require('../models/registro');
 
 // Rutas para pais
 router.get('/pais', async (req, res) => {
@@ -35,6 +35,8 @@ router.get('/usuario', async (req, res) => {
   }
 });
 
+
+
 router.post('/usuario', async (req, res) => {
   try {
     const nuevoUsuario = await createUsuario(req.body);
@@ -45,14 +47,19 @@ router.post('/usuario', async (req, res) => {
 });
 
 router.put('/usuario/:id', async (req, res) => {
+  const { id } = req.params; // Asegúrate de que id se define fuera del try/catch
   try {
-    const { id } = req.params;
-    const actualizadoUsuario = await updateUsuario(id, req.body);
-    res.json(actualizadoUsuario);
+    console.log(req.params); // Añade esto para depuración
+    console.log(`Actualizando usuario con ID: ${id}`); // Depuración adicional
+    const updatedUsuario = await updateUsuario(id, req.body);
+    res.json(updatedUsuario);
   } catch (error) {
+    console.error(`Error updating user with ID ${id}:`, error); // Ahora id está disponible aquí
     res.status(500).json({ error: error.message });
   }
 });
+
+
 
 router.delete('/usuario/:id', async (req, res) => {
   try {
@@ -75,10 +82,26 @@ router.get('/registro', async (req, res) => {
 });
 
 router.post('/registro', async (req, res) => {
+  const { tiempo, inhalaciones, exhalaciones, fecha, ciclos, id_usuario } = req.body;
+
+  // Generar un ID de registro
+  const id_registro = await getNextRegistroId();
+
   try {
-    const nuevoRegistro = await createRegistro(req.body);
-    res.json(nuevoRegistro);
+    // Llamar a la función para insertar el nuevo registro en la base de datos
+    const nuevoRegistro = await createRegistro({
+      id_registro,
+      tiempo,
+      inhalaciones,
+      exhalaciones,
+      fecha: new Date(fecha), // Asegurarse de que la fecha sea un objeto Date
+      ciclos,
+      id_usuario
+    });
+
+    res.status(201).json({ message: 'Registro creado exitosamente', registroId: nuevoRegistro.id_registro });
   } catch (error) {
+    console.error('Error al crear registro:', error);
     res.status(500).json({ error: error.message });
   }
 });
@@ -89,6 +112,7 @@ router.put('/registro/:id', async (req, res) => {
     const actualizadoRegistro = await updateRegistro(id, req.body);
     res.json(actualizadoRegistro);
   } catch (error) {
+    console.error(`Error updating record with ID ${id}:`, error);
     res.status(500).json({ error: error.message });
   }
 });
@@ -99,6 +123,7 @@ router.delete('/registro/:id', async (req, res) => {
     await deleteRegistro(id);
     res.json({ message: 'Registro eliminado' });
   } catch (error) {
+    console.error(`Error deleting record with ID ${id}:`, error);
     res.status(500).json({ error: error.message });
   }
 });
@@ -125,6 +150,8 @@ router.post('/login', async (req, res) => {
 router.post('/register', async (req, res) => {
   const { nombre_usuario, contrasena, nombre_completo, correo, pais_id } = req.body;
 
+  console.log('Datos recibidos:', req.body); // Verifica que pais_id esté presente
+
   // Generar un ID de usuario aleatorio
   const id_usuario = await getNextUserId();
 
@@ -148,5 +175,7 @@ router.post('/register', async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 });
+
+
 
 module.exports = router;

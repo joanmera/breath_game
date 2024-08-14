@@ -12,5 +12,5 @@ app.use(bodyParser.json()); // Analiza las solicitudes con cuerpo JSON
 app.use('/api', routes); // Registra las rutas bajo el prefijo /api
 
 app.listen(port, () => {
-  console.log(`Servidor escuchando en http://localhost:${port}`);
+  console.log(`El servidor se esta ejecutando en http://localhost:${port}`);
 });
